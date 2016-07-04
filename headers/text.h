@@ -9,6 +9,4 @@ private:
 public:
 	text(std::string);
 	~text(){};
-	void print();
-
 };

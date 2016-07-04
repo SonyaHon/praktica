@@ -5,8 +5,6 @@
 #include "../headers/text.h"
 #include <locale>
 
-std::string a = "абба";
-
 int main(int argc, char **argv) {
 	setlocale(LC_CTYPE, "");
 

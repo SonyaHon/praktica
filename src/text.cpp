@@ -32,8 +32,7 @@ text::text(std::string str) {
 				}
 			}
 		}
-		std::wcout << finaleStr << std::endl;
+		terms.push_back(finaleStr);
 	}
 
 }
-
