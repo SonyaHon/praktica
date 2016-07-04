@@ -8,6 +8,17 @@
 std::wstring canonL = L"цкнгшщзхфвпрлджчмстбьъ";
 std::wstring canonU = L"ЦКНГШЩЗХФВПРЛДЖЧМСТБЬЪ";
 
+void text::setMass(int value) {
+	mass = value;
+}
+
+void text::print() {
+	for(size_t i = 0; i < terms.size(); ++i) {
+		std::wcout << terms[i] << " ";
+	}
+	std::wcout << "-----------------" <<std::endl;
+}
+
 text::text(std::string str) {
 
 	std::ifstream file(str.c_str());
@@ -35,4 +46,5 @@ text::text(std::string str) {
 		terms.push_back(finaleStr);
 	}
 
+	mass = 0;
 }

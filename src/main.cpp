@@ -2,13 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
-#include "../headers/text.h"
 #include <locale>
+#include "../headers/clusterAnaliz.h"
 
 int main(int argc, char **argv) {
 	setlocale(LC_CTYPE, "");
 
-	text t = text("text.txt");
+	clusterAnaliz ca = clusterAnaliz("./files/");
 
 	return 0;
 }

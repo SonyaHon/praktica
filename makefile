@@ -1,5 +1,5 @@
-all: main.o text.o
-	g++ main.o text.o -o out
+all: main.o text.o ca.o
+	g++ main.o text.o ca.o -o out
 	rm *.o 
 
 main.o: ./src/main.cpp
@@ -7,3 +7,6 @@ main.o: ./src/main.cpp
 
 text.o: ./src/text.cpp
 	g++ -c ./src/text.cpp 
+
+ca.o: ./src/clusterAnaliz.cpp
+	g++ -c ./src/clusterAnaliz.cpp -o ca.o
