@@ -7,7 +7,7 @@
 
 std::wstring canonL = L"цкнгшщзхфвпрлджчмстбьъ1234567890";
 std::wstring canonU = L"ЦКНГШЩЗХФВПРЛДЖЧМСТБЬЪ";
-std::string euCanon = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm[]{}+-:;()&$#@";
+std::string euCanon = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm+-:;&$#@";
 
 void text::setMass(int value) {
 	mass = value;
@@ -70,4 +70,12 @@ text::text(std::string str) {
 	}
 
 	mass = 0;
+
+	for(size_t i = 0; i < terms.size(); ++i) {
+		termsWeights.push_back(0);
+	}
+}
+
+int text::getMass() {
+	return mass;
 }
