@@ -8,6 +8,7 @@
 int main(int argc, char **argv) {
 	setlocale(LC_CTYPE, "");
 
-	clusterAnaliz ca = clusterAnaliz("./files/");
+	clusterAnaliz ca = clusterAnaliz("./files1/");
+
 	return 0;
 }

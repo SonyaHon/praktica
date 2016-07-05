@@ -1,5 +1,5 @@
 all: main.o text.o ca.o
-	g++ main.o text.o ca.o -o out
+	g++ main.o text.o ca.o -std=c++11 -o out
 	rm *.o 
 
 main.o: ./src/main.cpp

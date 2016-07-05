@@ -19,6 +19,19 @@ void text::print() {
 	}
 }
 
+text::text() {
+	mass = 0;
+}
+
+text text::operator=(text &t) {
+	text a = text();
+	a.terms = t.terms;
+	a.termsWeights = t.termsWeights;
+	a.mass = t.mass;
+
+	return a;
+}
+
 text::text(std::string str) {
 
 	std::ifstream file(str.c_str());
@@ -45,7 +58,7 @@ text::text(std::string str) {
 
 			terms.push_back(finaleStr);
 		}
-		else {
+		else if(!flag){
 			if (term.size() < 4) {
 				continue;
 			}
@@ -74,6 +87,9 @@ text::text(std::string str) {
 	for(size_t i = 0; i < terms.size(); ++i) {
 		termsWeights.push_back(0);
 	}
+
+	std::cout << "TEXT HERE: " << std::endl << "Terms: " << terms.size() << std::endl
+	 << "TermsWeights: " << termsWeights.size() << std::endl;
 }
 
 int text::getMass() {

@@ -35,36 +35,54 @@ clusterAnaliz::clusterAnaliz(std::string directory) {
 	std::vector<std::string> fileNames = readDir(directory);
 
 	for (size_t i = 2; i < fileNames.size(); ++i) {
-		std::string name = "./files/" + fileNames[i];
-		std::cout << fileNames[i] << std::endl;
+		std::string name = directory + fileNames[i];
+		std::cout << name << std::endl;
 		text t = text(name);
 		texts.push_back(t);
 	}
 
-	for(int i = 0; i < texts.size(); ++i) {
-		texts[i].setMass(findTextMass(i));
-		std::wcout << texts[i].getMass() << std::endl;
+	for (int i = 0; i < texts.size(); ++i) {
+		findTextMass(i);
 	}
+
+	std::cout << textDist(0, 1) << std::endl;
 
 }
 
-int clusterAnaliz::findTextMass(int idx) {
-	
-	for(size_t i = 0; i < texts[idx].terms.size(); ++i) {
-		for(size_t j = 0; j < texts.size(); ++j) {
-			for(size_t k = 0; k < texts[j].terms.size(); ++k) {
-				if(texts[idx].terms[i] == texts[j].terms[k]) {
-					texts[idx].termsWeights[i] += 1;
-				}
+void clusterAnaliz::findTextMass(int idx) {
+
+	for (size_t i = 0; i < texts[idx].terms.size(); ++i) {
+		for (size_t j = 0; j < texts[idx].terms.size(); ++j) {
+			if (texts[idx].terms[i] == texts[idx].terms[j]) {
+				texts[idx].termsWeights[i] += 1;
 			}
 		}
 	}
 
-	int mass = 0;
+	for (size_t i = 0; i < texts[idx].terms.size(); ++i) {
+		if(texts[idx].termsWeights[i] == 0) {
+			texts[idx].termsWeights.erase(texts[idx].termsWeights.begin() + i);
+			std::vector<double>(texts[idx].termsWeights).swap(texts[idx].termsWeights);
+		}	
+	}
+}
 
-	for(size_t i = 0; i < texts[idx].terms.size(); ++i) {
-		mass += texts[idx].termsWeights[i];
+double clusterAnaliz::textDist(int idx1, int idx2) {
+
+	text t1 = texts[idx1];
+	text t2 = texts[idx2];
+
+	if (t1.terms.size() > t2.terms.size()) {
+		for (size_t i = 0; i < t1.terms.size() - t2.terms.size(); ++i) {
+			t2.termsWeights.push_back(1);
+		}
 	}
 
-	return mass;
- }
+	double summ = 0;
+
+	for (size_t i = 0; i < t1.terms.size(); ++i) {
+		summ += (t1.termsWeights[i] - t2.termsWeights[i])*(t1.termsWeights[i] - t2.termsWeights[i]);
+	}
+
+	return 1/(summ + 1);
+}

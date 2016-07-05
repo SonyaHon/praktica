@@ -5,7 +5,9 @@
 class clusterAnaliz {
 private:
 	std::vector<text> texts;
-	int findTextMass(int	);
+	void findTextMass(int);
+
+	double textDist(int, int);
 
 public:
 	clusterAnaliz(std::string);
