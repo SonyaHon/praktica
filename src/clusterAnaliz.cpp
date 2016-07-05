@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <iostream>
+#include <math.h>
 
 std::vector <std::string> readDir( const std::string& path = std::string() ) {
 	std::vector <std::string> result;
@@ -46,6 +47,8 @@ clusterAnaliz::clusterAnaliz(std::string directory) {
 	}
 
 	std::cout << textDist(0, 1) << std::endl;
+	std::cout << textDist(0, 5) << std::endl;
+	std::cout << textDist(0, 8) << std::endl;
 
 }
 
@@ -77,12 +80,17 @@ double clusterAnaliz::textDist(int idx1, int idx2) {
 			t2.termsWeights.push_back(1);
 		}
 	}
+	else {
+		for (size_t i = 0; i < t2.terms.size() - t1.terms.size(); ++i) {
+			t1.termsWeights.push_back(1);
+		}
+	}
 
 	double summ = 0;
 
-	for (size_t i = 0; i < t1.terms.size(); ++i) {
+	for(size_t i = 0; i < t1.terms.size(); ++i) {
 		summ += (t1.termsWeights[i] - t2.termsWeights[i])*(t1.termsWeights[i] - t2.termsWeights[i]);
 	}
 
-	return 1/(summ + 1);
+	return sqrt(summ);
 }
