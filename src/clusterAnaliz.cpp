@@ -45,28 +45,44 @@ clusterAnaliz::clusterAnaliz(std::string directory) {
 	for (int i = 0; i < texts.size(); ++i) {
 		findTextMass(i);
 	}
+}
 
-	std::cout << textDist(0, 1) << std::endl;
-	std::cout << textDist(0, 5) << std::endl;
-	std::cout << textDist(0, 8) << std::endl;
+void clusterAnaliz::caDo(int clustersAmount) {
+	srand(time(NULL));
+	std::vector<clusterAnaliz::centroid> centroids;
 
+	for (size_t i = 0; i < clustersAmount; ++i) {
+		int idx = rand() % texts.size();
+		clusterAnaliz::centroid c;
+		c.mass = 0;
+		text temp = texts[idx];
+		c.c_text = temp;
+	}
+
+	for (int i = 0; i < texts.size(); ++i) {
+		double dist = 0;
+		for (int j = 0; j < centroids.size(); ++j) {
+
+		}
+	}
 }
 
 void clusterAnaliz::findTextMass(int idx) {
 
 	for (size_t i = 0; i < texts[idx].terms.size(); ++i) {
 		for (size_t j = 0; j < texts[idx].terms.size(); ++j) {
-			if (texts[idx].terms[i] == texts[idx].terms[j]) {
-				texts[idx].termsWeights[i] += 1;
+			if (texts[idx].terms[i].str == texts[idx].terms[j].str) {
+				texts[idx].terms[i].weight += 1;
 			}
 		}
 	}
 
 	for (size_t i = 0; i < texts[idx].terms.size(); ++i) {
-		if(texts[idx].termsWeights[i] == 0) {
-			texts[idx].termsWeights.erase(texts[idx].termsWeights.begin() + i);
-			std::vector<double>(texts[idx].termsWeights).swap(texts[idx].termsWeights);
-		}	
+		if (texts[idx].terms[i].weight <= 2) {
+			texts[idx].terms.erase(texts[idx].terms.begin() + i);
+			std::vector<text::myPair>(texts[idx].terms).swap(texts[idx].terms);
+			--i;
+		}
 	}
 }
 
@@ -75,22 +91,14 @@ double clusterAnaliz::textDist(int idx1, int idx2) {
 	text t1 = texts[idx1];
 	text t2 = texts[idx2];
 
-	if (t1.terms.size() > t2.terms.size()) {
-		for (size_t i = 0; i < t1.terms.size() - t2.terms.size(); ++i) {
-			t2.termsWeights.push_back(1);
-		}
-	}
-	else {
-		for (size_t i = 0; i < t2.terms.size() - t1.terms.size(); ++i) {
-			t1.termsWeights.push_back(1);
-		}
-	}
-
 	double summ = 0;
 
-	for(size_t i = 0; i < t1.terms.size(); ++i) {
-		summ += (t1.termsWeights[i] - t2.termsWeights[i])*(t1.termsWeights[i] - t2.termsWeights[i]);
+	for (size_t i = 0; i < t1.terms.size(); ++i) {
+		for (size_t j = 0; j < t2.terms.size(); ++j) {
+			if (t1.terms[i].str == t2.terms[j].str) {
+				summ += t1.terms[i].weight + t2.terms[j].weight;
+			}
+		}
 	}
-
-	return sqrt(summ);
+	return summ / (t1.terms.size() + t2.terms.size());
 }

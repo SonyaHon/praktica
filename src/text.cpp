@@ -15,7 +15,7 @@ void text::setMass(int value) {
 
 void text::print() {
 	for (size_t i = 0; i < terms.size(); ++i) {
-		std::wcout << terms[i] << " ";
+		std::wcout << terms[i].str << " ";
 	}
 }
 
@@ -26,11 +26,19 @@ text::text() {
 text text::operator=(text &t) {
 	text a = text();
 	a.terms = t.terms;
-	a.termsWeights = t.termsWeights;
 	a.mass = t.mass;
 
 	return a;
 }
+
+text text::operator=(const text &t) {
+	text a = text();
+	a.terms = t.terms;
+	a.mass = t.mass;
+
+	return a;
+}
+
 
 text::text(std::string str) {
 
@@ -50,16 +58,20 @@ text::text(std::string str) {
 
 			for (size_t q = 0; q < wstr.size(); ++q) {
 				for (size_t m = 0; m < euCanon.size(); ++m) {
-					if(wstr[q] == euCanon[m]) {
+					if (wstr[q] == euCanon[m]) {
 						finaleStr += euCanon[m];
 					}
 				}
 			}
 
-			terms.push_back(finaleStr);
+			myPair p;
+			p.str = finaleStr;
+			p.weight = 0;
+
+			terms.push_back(p);
 		}
-		else if(!flag){
-			if (term.size() < 4) {
+		else if (!flag) {
+			if (term.size() < 8) {
 				continue;
 			}
 			wchar_t * ws = new wchar_t[(term.size() / 2)*sizeof(wchar_t)];
@@ -78,18 +90,16 @@ text::text(std::string str) {
 					}
 				}
 			}
-			terms.push_back(finaleStr);
+
+			myPair p;
+			p.str = finaleStr;
+			p.weight = 0;
+
+			terms.push_back(p);
 		}
 	}
 
 	mass = 0;
-
-	for(size_t i = 0; i < terms.size(); ++i) {
-		termsWeights.push_back(0);
-	}
-
-	std::cout << "TEXT HERE: " << std::endl << "Terms: " << terms.size() << std::endl
-	 << "TermsWeights: " << termsWeights.size() << std::endl;
 }
 
 int text::getMass() {

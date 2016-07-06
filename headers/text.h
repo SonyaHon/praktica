@@ -7,16 +7,22 @@ private:
 	int mass;
 
 public:
-	std::vector<std::wstring> terms;
-	std::vector<double> termsWeights;
+
+	struct myPair {
+		std::wstring str;
+		double weight;
+	};
+
+	std::vector<myPair> terms;
 	text(std::string);
 	text();
-	~text(){};
+	~text() {};
 	void setMass(int);
 	int getMass();
 
 	void print();
 
+	text operator=(const text &t);
 	text operator=(text &t);
 };
 
