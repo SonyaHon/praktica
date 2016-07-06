@@ -24,6 +24,13 @@ public:
 
 	text operator=(const text &t);
 	text operator=(text &t);
+	text operator+=(text &t) {
+		for(size_t i = 0; i < t.terms.size(); ++i) {
+			terms.push_back(t.terms[i]);
+		}
+
+		return *this;
+	}
 };
 
 

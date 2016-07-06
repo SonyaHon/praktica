@@ -55,15 +55,26 @@ void clusterAnaliz::caDo(int clustersAmount) {
 		int idx = rand() % texts.size();
 		clusterAnaliz::centroid c;
 		c.mass = 0;
+		c.t_idx = idx;
 		text temp = texts[idx];
 		c.c_text = temp;
+		centroids.push_back(c);
 	}
 
 	for (int i = 0; i < texts.size(); ++i) {
 		double dist = 0;
+		int whereIdx = 0;
 		for (int j = 0; j < centroids.size(); ++j) {
-
+			if(dist < textDist(i, centroids[j].t_idx)) {
+				dist = textDist(i, centroids[j].t_idx);
+				whereIdx = j; 
+			}
 		}
+		centroids[whereIdx].c_texts.push_back(texts[i]);
+	}
+
+	for(size_t i = 0; i < centroids.size(); ++i) {
+			centroids[i].countMass();
 	}
 }
 

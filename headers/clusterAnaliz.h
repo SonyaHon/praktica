@@ -13,11 +13,15 @@ private:
 		
 		double mass;
 
+		int t_idx;
+
 		text c_text;
 
 		std::vector<text> c_texts;
 
-		void countMass() {};
+		void countMass() {
+			text temp;
+		}
 	};
 
 public:
