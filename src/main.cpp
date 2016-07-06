@@ -10,5 +10,6 @@ int main(int argc, char **argv) {
 
 	clusterAnaliz ca = clusterAnaliz("./files1/");
 	ca.caDo(3);
+	
 	return 0;
 }

@@ -51,6 +51,8 @@ void clusterAnaliz::caDo(int clustersAmount) {
 	srand(time(NULL));
 	std::vector<clusterAnaliz::centroid> centroids;
 
+	system("rm ./result/*");
+
 	for (size_t i = 0; i < clustersAmount; ++i) {
 		int idx = rand() % texts.size();
 		clusterAnaliz::centroid c;
@@ -76,6 +78,7 @@ void clusterAnaliz::caDo(int clustersAmount) {
 	for(size_t i = 0; i < centroids.size(); ++i) {
 			centroids[i].countMass();
 	}
+
 }
 
 void clusterAnaliz::findTextMass(int idx) {

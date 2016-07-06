@@ -20,7 +20,11 @@ private:
 		std::vector<text> c_texts;
 
 		void countMass() {
-			text temp;
+			text temp = c_texts[0];
+			for(size_t i = 1; i < c_texts.size(); ++i) {
+				temp+=c_texts[i];
+			}
+			c_text = temp;
 		}
 	};
 
